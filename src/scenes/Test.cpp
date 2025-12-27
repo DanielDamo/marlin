@@ -1,9 +1,9 @@
-#include "scenes/MainMenu.hpp"
 #include "scenes/Test.hpp"
+#include "scenes/MainMenu.hpp"
 
-MainMenu::MainMenu() {
+Test::Test() {
     commandMap = {
-        { "start", [] { return std::make_unique<Test>(); } },
+        { "start", [] { return std::make_unique<MainMenu>(); } },
         { "quit", [] { return nullptr; } }
     };
 
@@ -14,21 +14,21 @@ MainMenu::MainMenu() {
     };
 }
 
-void MainMenu::onEnter(GameState& gameState) {
+void Test::onEnter(GameState& gameState) {
 
 }
-void MainMenu::onExit(GameState& gameState) {
+void Test::onExit(GameState& gameState) {
     
 }
-void MainMenu::update(GameState& gameState, float dt) {
+void Test::update(GameState& gameState, float dt) {
     
 }
 
-SceneDrawData MainMenu::getDrawData() const {
+SceneDrawData Test::getDrawData() const {
     SceneDrawData data;
 
     data.widgets.push_back(Widget{
-        TextBlock{ "Ahoy, Captain!" }
+        TextBlock{ "Ahoy, Captain 2!" }
     });
 
     data.widgets.push_back(Widget{

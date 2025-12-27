@@ -2,9 +2,8 @@
 #include <string>
 #include <vector>
 
+#include "engine/Widgets.hpp"
+
 struct SceneDrawData {
-    std::string topText;
-    std::string art;
-    std::vector<std::string> menuOptions;
-    std::string inputPrompt;
+    std::vector<Widget> widgets;
 };

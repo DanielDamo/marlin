@@ -10,20 +10,17 @@
 class SceneManager {
 public:
     explicit SceneManager(std::unique_ptr<Scene> startScene);
-    ~SceneManager() = default;
-
-    // Called when the renderer finishes a command (Enter pressed)
-    void handleCommand(const std::string& command, GameState& gameState);
-
-    // Called every frame (for animations, timers, etc.)
-    void update(GameState& gameState);
-
-    // Renderer pulls this to know what to draw
+    // Handle Inputs
+    void handleInput(const InputEvent& input, GameState& gamestate);
+    // Per-frame update
+    void update(GameState& gameState, float deltaTime);
+    // Data for renderer
     SceneDrawData getDrawData() const;
 
 private:
-    void transitionIfNeeded();
-    bool handleGlobalCommand(const std::string& command, GameState& gameState);
-
     std::unique_ptr<Scene> currentScene_;
+    // Global commands like save/load
+    bool handleGlobalCommand(const std::string& command, GameState& gameState);
+    // Scene transitions
+    void transitionIfNeeded(GameState& gameState);
 };

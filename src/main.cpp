@@ -3,48 +3,40 @@
 #include "engine/SceneDrawData.hpp"
 #include "Ship.hpp"
 #include "engine/SceneManager.hpp"
+#include "scenes/MainMenu.hpp"
 
 
 #include <ncurses.h>
 #include <iostream>
+#include <chrono>
 
-//TEMP
-class MenuScene : public Scene {
-    public:
-        SceneDrawData getDrawData() const override {
-            SceneDrawData data;
-            data.topText = "Ahoy!";
-            data.art = "#'asd#'a#sd";
-            data.menuOptions = {
-                "1) Set Sail",
-                "2) Fire Cannons",
-                "3) Abandon Ship"
-            };
-            data.inputPrompt = "> ";
-
-            return data;
-        };
-};
 
 int main() {
     // --- Initialise renderer ---
-    std::unique_ptr<Renderer> renderer = std::make_unique<TerminalRenderer>(0.9);
+    std::unique_ptr<Renderer> renderer = std::make_unique<TerminalRenderer>();
 
     // --- Initialise SceneManager and first scene ---
-    SceneManager sceneManager(std::make_unique<MenuScene>());
+    SceneManager sceneManager(std::make_unique<MainMenu>());
     GameState gameState;
+
+    // --- Initialise time stuff ---
+    auto lastTime = std::chrono::high_resolution_clock::now();
 
     // --- Main Loop ----
     bool running = true;
     while (running) {
+        auto now = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<float> elapsed = now - lastTime;
+        lastTime = now;
+        float deltaTime = elapsed.count();
+
         auto input = renderer->pollInput();
 
-        if (input.hasCommand) {
-            sceneManager.handleCommand(input.command, gameState);
-        }
-
-        sceneManager.update(gameState);
+        
+        sceneManager.handleInput(input, gameState);
+        sceneManager.update(gameState, deltaTime);
         renderer->render(sceneManager.getDrawData());
+        
     }
 
     return 0;

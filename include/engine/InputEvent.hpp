@@ -1,17 +1,8 @@
 #pragma once
 #include <string>
 
-enum class InputType {
-    None,
-    Character,
-    Enter,
-    Backspace,
-    Escape,
-    Up,
-    Down
+struct InputEvent {
+    std::optional<std::string> action;   // hotkeys
+    std::optional<std::string> command;  // typed stuff
 };
 
-struct InputEvent {
-    bool hasCommand = false;
-    std::string command;
-};
