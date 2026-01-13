@@ -34,7 +34,7 @@ struct ResourceMeter {
 struct MenuOption {
     char hotkey;
     std::string label;
-    std::string command; 
+    std::string command;  
 };
 
 
@@ -64,6 +64,12 @@ using WidgetData = std::variant<
     StatusList
 >;
 
+struct WidgetMeta {
+    std::string group;
+    int order;
+};
+
 struct Widget {
+    WidgetMeta meta;
     WidgetData data;
 };
